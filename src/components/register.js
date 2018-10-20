@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 import Routes from '../config/routes';
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+class NormalRegisterForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -18,14 +18,24 @@ class NormalLoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.handleSubmit} className="register-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }]
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Username"
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('email', {
+            rules: [{ required: true, message: 'Please input your email!' }]
+          })(
+            <Input
+              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Email"
             />
           )}
         </FormItem>
@@ -41,30 +51,23 @@ class NormalLoginForm extends React.Component {
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true
-          })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="#">
-            Forgot password
-          </a>
           <Button
             type="primary"
             htmlType="submit"
-            className="login-form-button"
+            className="register-form-button"
           >
-            Log in
+            Register
           </Button>
-          Or <a onClick={() => this.props.history.push(Routes.register)}>Register Now!</a>
+          Or <a onClick={() => this.props.history.push(Routes.login)}>Login</a>
         </FormItem>
       </Form>
     );
   }
 }
-NormalLoginForm.propTypes = {
+NormalRegisterForm.propTypes = {
   form: PropTypes.object,
   history: PropTypes.object
 };
 
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+const WrappedNormalRegisterForm = Form.create()(NormalRegisterForm);
+export default WrappedNormalRegisterForm;
